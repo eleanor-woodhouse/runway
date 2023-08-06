@@ -1,0 +1,61 @@
+.App {
+  text-align: center;
+}
+
+.main-body {
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+p {
+  text-align: center;
+}
+
+.info-card{
+  width: auto;
+  height: auto;
+  border: solid black 1px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+}
+
+img {
+  max-height: 100vh;
+  max-width: 100%;
+}
+
+.info-pane-container {
+  width: 50vw;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+}
+
+.image-container {
+  width: 50vw;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+button.invisible-button {
+  background-color: transparent;
+  border-width: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  padding: 0;
+  cursor: pointer;
+}
