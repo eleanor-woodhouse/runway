@@ -34,9 +34,13 @@ function App() {
               <></>
             )}
           </div>
-          <div className="image-pane" onClick={handleClick}>
-            {imageAndDetails.image && <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} />}
-          </div>
+          {imageAndDetails.image ? (
+            <div className="image-pane" onClick={handleClick}>
+              <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} />
+            </div>
+          ) : (
+            <div className="placeholder" onClick={handleClick}></div>
+          )}
         </div>
         <div className="right-gutter"></div>
         <div className="bottom-gutter"></div>
