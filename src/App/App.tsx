@@ -13,31 +13,33 @@ function App() {
 
   return (
     <div className="main-body">
-      <header></header>
       <div className="container">
-        <div className="info-pane-container">
-          {imageAndDetails.image ? (
-            <div className="info-card">
-              <ul>
-                <li>Designer: {imageAndDetails.designer}</li>
-                <li>Season: {imageAndDetails.season}</li>
-                <li>City: {imageAndDetails.city}</li>
-                <li>{imageAndDetails.image.credit}</li>
-              </ul>
-            </div>
-          ) : (
-            <></>
-          )}
+        <div className="left-gutter"></div>
+        <div className="top-gutter"></div>
+        <div className="middle-cell">
+          <div className="info-pane">
+            {imageAndDetails.image ? (
+              <div className="info-card">
+                <a href={imageAndDetails.externalLink} target="_blank" rel="noopener noreferrer">
+                  <ul>
+                    <li>Designer: {imageAndDetails.designer}</li>
+                    <li>Season: {imageAndDetails.season}</li>
+                    <li>City: {imageAndDetails.city}</li>
+                    <br></br>
+                    <li className="smaller">Photo: {imageAndDetails.image.credit}</li>
+                  </ul>
+                </a>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="image-pane" onClick={handleClick}>
+            {imageAndDetails.image && <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} />}
+          </div>
         </div>
-        <div className="image-container">
-          {imageAndDetails.image ? (
-            <button className="invisible-button" onClick={handleClick}>
-              <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} />
-            </button>
-          ) : (
-            <button onClick={handleClick}>Click me to get a random runway image</button>
-          )}
-        </div>
+        <div className="right-gutter"></div>
+        <div className="bottom-gutter"></div>
       </div>
     </div>
   )

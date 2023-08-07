@@ -16,4 +16,5 @@ export type VogueShowWithSingleImage = {
   city: string
   review: Review
   image: RunwayImage
+  externalLink: string
 }
