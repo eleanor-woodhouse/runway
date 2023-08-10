@@ -1,41 +1,14 @@
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 import { useState } from "react"
 import "../styles/App.scss"
 import { getRandomImageWithShowDetails } from "../runway"
 import { VogueShowWithSingleImage } from "../types"
 
 function App() {
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  // const [windowHeight, setWindowHeight] = useState(window.innerHeight)
-
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     setWindowWidth(window.innerWidth)
-  //   }
-
-  //   window.addEventListener("resize", handleWindowResize)
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleWindowResize)
-  //   }
-  // })
-
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     setWindowHeight(window.innerHeight)
-  //   }
-
-  //   window.addEventListener("resize", handleWindowResize)
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleWindowResize)
-  //   }
-  // })
-
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
 
   const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(false)
-  const [gridStage, setGridStage] = useState({})
+  const [transitionGridSizes, setTransitionGridSizes] = useState({})
   const [gridIsClosed, setGridIsClosed] = useState(false)
 
   const [instructionsAreVisible, setInstructionsAreVisible] = useState(true)
@@ -47,7 +20,6 @@ function App() {
   const rightGutterRef = useRef<HTMLDivElement | null>(null)
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
-  const transitionRef = useRef<HTMLDivElement | null>(null)
   const windowSize = useRef([window.innerWidth, window.innerHeight])
 
   async function handleClick() {
@@ -63,9 +35,9 @@ function App() {
       middleCellRef &&
       middleCellRef.current
     ) {
-      setGridStage({
-        gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px ${rightGutterRef.current.offsetWidth}px`,
-        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
+      setTransitionGridSizes({
+        gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
+        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
       })
     }
     startTransition()
@@ -78,9 +50,9 @@ function App() {
 
   function closeGrid() {
     setTimeout(() => {
-      setGridStage({
-        gridTemplateColumns: "50vw 0px 50vw",
-        gridTemplateRows: "50vh 0px 50vh",
+      setTransitionGridSizes({
+        gridTemplateColumns: "50vw 0px 400vw",
+        gridTemplateRows: "50vh 0px 400vh",
       })
       setTimeout(() => {
         setGridIsClosed(true)
@@ -103,9 +75,11 @@ function App() {
 
   function openGridToLoadingCard() {
     setGridIsClosed(false)
-    const columnSize = (windowSize.current[0] - 300) / 2
-    const rowSize = (windowSize.current[1] - 220) / 2
-    setGridStage((prevGridStage) => {
+    // const columnSize = (windowSize.current[0] - 300) / 2
+    // const rowSize = (windowSize.current[1] - 220) / 2
+    const columnSize = windowSize.current[0] / 3
+    const rowSize = windowSize.current[1] / 3
+    setTransitionGridSizes((prevGridStage) => {
       if (
         leftGutterRef &&
         leftGutterRef.current &&
@@ -121,8 +95,12 @@ function App() {
         return {
           ...prevGridStage,
           // FIX sizing is sometimes wrong – is this just when dev tools are open?
-          gridTemplateColumns: `${columnSize}px 300px ${columnSize}px`,
-          gridTemplateRows: `${rowSize}px 220px ${rowSize}px`,
+          // gridTemplateColumns: `${columnSize}px 300px ${columnSize}px`,
+          // gridTemplateRows: `${rowSize}px 220px ${rowSize}px`,
+          // gridTemplateColumns: `${columnSize}px ${columnSize}px ${columnSize}px`,
+          // gridTemplateRows: `${rowSize}px ${rowSize}px ${rowSize}px`,
+          gridTemplateColumns: `33vw 34vw 33vw`,
+          gridTemplateRows: `33vh 34vh 33vh`,
         }
       }
       return prevGridStage
@@ -134,7 +112,7 @@ function App() {
   }
 
   function closeLoadingCard() {
-    setGridStage({
+    setTransitionGridSizes({
       gridTemplateColumns: "50vw 0px 50vw",
       gridTemplateRows: "50vh 0px 50vh",
     })
@@ -147,7 +125,7 @@ function App() {
   function openGridToMainView() {
     setLoadingCardIsVisible(false)
     setGridIsClosed(false)
-    setGridStage((prevGridStage) => {
+    setTransitionGridSizes((prevGridStage) => {
       if (
         leftGutterRef &&
         leftGutterRef.current &&
@@ -178,8 +156,7 @@ function App() {
     <div className="main-body">
       <div
         className={`transition-grid ${transitionGridIsVisible ? "visible" : "invisible"}`}
-        style={gridStage}
-        ref={transitionRef}
+        style={transitionGridSizes}
       >
         <div className="cell-one"></div>
         <div className="cell-two"></div>

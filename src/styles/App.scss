@@ -10,13 +10,13 @@
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
-  grid-template-columns: minmax(40px, auto) auto minmax(40px, auto);
-  grid-template-rows: minmax(40px, auto) auto minmax(40px, auto);
+    grid-template-columns: minmax(40px, auto) auto minmax(40px, auto);
+    grid-template-rows: minmax(40px, auto) auto minmax(40px, auto);
 }
 
 .transition-grid {
   position: absolute;
-  z-index: 999;
+  z-index: 9;
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
@@ -33,7 +33,7 @@
 
 .loading {
   position: absolute;
-  z-index: 3;
+  z-index: 8;
   min-height: 100vh;
   max-height: 100vh;
   min-width: 100vw;
@@ -49,8 +49,8 @@
 .loading-card {
   display: grid;
   place-content: center;
-  height: 220px;
-  width: 300px;
+  height: 100vh;
+  width: 100vw;
   background-color: white;
 }
 
@@ -96,7 +96,8 @@
 .welcome-card {
   grid-column-start: 2;
   grid-row-start: 2;
-  height: auto;
+  height: 80vh;
+  width: 80vw;
   display: grid;
   place-items: center;
   z-index: 1;
