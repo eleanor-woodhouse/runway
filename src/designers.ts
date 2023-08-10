@@ -12,7 +12,16 @@ const eleanorFavouriteDesigners = [
     slug: "azzedine-alaia",
   },
   {
+    slug: "azzedine-alaia",
+  },
+  {
     slug: "alberta-ferretti",
+  },
+  {
+    slug: "alexander-mcqueen",
+  },
+  {
+    slug: "alexander-mcqueen",
   },
   {
     slug: "alexander-mcqueen",
@@ -25,6 +34,9 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "and-re-walker",
+  },
+  {
+    slug: "ann-demeulemeester",
   },
   {
     slug: "ann-demeulemeester",
@@ -43,6 +55,15 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "atelier-versace",
+  },
+  {
+    slug: "balenciaga",
+  },
+  {
+    slug: "balenciaga",
+  },
+  {
+    slug: "balenciaga",
   },
   {
     slug: "balenciaga",
@@ -102,6 +123,12 @@ const eleanorFavouriteDesigners = [
     slug: "celine",
   },
   {
+    slug: "celine",
+  },
+  {
+    slug: "celine",
+  },
+  {
     slug: "central-saint-martins",
   },
   {
@@ -114,13 +141,34 @@ const eleanorFavouriteDesigners = [
     slug: "chanel",
   },
   {
+    slug: "chanel",
+  },
+  {
+    slug: "chanel",
+  },
+  {
     slug: "charles-jeffrey-loverboy",
   },
   {
     slug: "chloe",
   },
   {
+    slug: "chloe",
+  },
+  {
     slug: "christian-dior",
+  },
+  {
+    slug: "christian-dior",
+  },
+  {
+    slug: "christian-dior",
+  },
+  {
+    slug: "christian-dior",
+  },
+  {
+    slug: "christian-lacroix",
   },
   {
     slug: "christian-lacroix",
@@ -132,7 +180,19 @@ const eleanorFavouriteDesigners = [
     slug: "christopher-kane",
   },
   {
+    slug: "christopher-kane",
+  },
+  {
     slug: "collina-strada",
+  },
+  {
+    slug: "comme-des-garcons",
+  },
+  {
+    slug: "comme-des-garcons",
+  },
+  {
+    slug: "comme-des-garcons",
   },
   {
     slug: "comme-des-garcons",
@@ -171,7 +231,16 @@ const eleanorFavouriteDesigners = [
     slug: "dries-van-noten",
   },
   {
+    slug: "dries-van-noten",
+  },
+  {
+    slug: "dries-van-noten",
+  },
+  {
     slug: "dsquared",
+  },
+  {
+    slug: "eckhaus-latta",
   },
   {
     slug: "eckhaus-latta",
@@ -225,6 +294,9 @@ const eleanorFavouriteDesigners = [
     slug: "givenchy",
   },
   {
+    slug: "givenchy",
+  },
+  {
     slug: "gmbh",
   },
   {
@@ -234,7 +306,13 @@ const eleanorFavouriteDesigners = [
     slug: "gucci",
   },
   {
+    slug: "gucci",
+  },
+  {
     slug: "gypsy-sport",
+  },
+  {
+    slug: "haider-ackermann",
   },
   {
     slug: "haider-ackermann",
@@ -249,10 +327,13 @@ const eleanorFavouriteDesigners = [
     slug: "herve-leger",
   },
   {
-    slug: "homme-plisse-issey-miyake",
+    slug: "hood-by-air",
   },
   {
-    slug: "hood-by-air",
+    slug: "imitation-of-christ",
+  },
+  {
+    slug: "imitation-of-christ",
   },
   {
     slug: "imitation-of-christ",
@@ -270,7 +351,19 @@ const eleanorFavouriteDesigners = [
     slug: "issey-miyake",
   },
   {
+    slug: "issey-miyake",
+  },
+  {
+    slug: "issey-miyake",
+  },
+  {
     slug: "jacquemus",
+  },
+  {
+    slug: "jean-paul-gaultier",
+  },
+  {
+    slug: "jean-paul-gaultier",
   },
   {
     slug: "jean-paul-gaultier",
@@ -280,6 +373,18 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "jil-sander",
+  },
+  {
+    slug: "jil-sander",
+  },
+  {
+    slug: "jil-sander",
+  },
+  {
+    slug: "john-galliano",
+  },
+  {
+    slug: "john-galliano",
   },
   {
     slug: "john-galliano",
@@ -292,6 +397,15 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "junya-watanabe",
+  },
+  {
+    slug: "junya-watanabe",
+  },
+  {
+    slug: "junya-watanabe",
+  },
+  {
+    slug: "j-w-anderson",
   },
   {
     slug: "j-w-anderson",
@@ -318,10 +432,31 @@ const eleanorFavouriteDesigners = [
     slug: "lanvin",
   },
   {
+    slug: "lanvin",
+  },
+  {
+    slug: "christophe-lemaire",
+  },
+  {
+    slug: "christophe-lemaire",
+  },
+  {
     slug: "christophe-lemaire",
   },
   {
     slug: "loewe",
+  },
+  {
+    slug: "loewe",
+  },
+  {
+    slug: "loewe",
+  },
+  {
+    slug: "louis-vuitton",
+  },
+  {
+    slug: "louis-vuitton",
   },
   {
     slug: "louis-vuitton",
@@ -333,7 +468,22 @@ const eleanorFavouriteDesigners = [
     slug: "maison-martin-margiela",
   },
   {
+    slug: "maison-martin-margiela",
+  },
+  {
+    slug: "maison-martin-margiela",
+  },
+  {
+    slug: "maison-martin-margiela",
+  },
+  {
     slug: "marc-by-marc-jacobs",
+  },
+  {
+    slug: "marc-jacobs",
+  },
+  {
+    slug: "marc-jacobs",
   },
   {
     slug: "marc-jacobs",
@@ -346,6 +496,9 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "mark-fast",
+  },
+  {
+    slug: "marni",
   },
   {
     slug: "marni",
@@ -435,10 +588,22 @@ const eleanorFavouriteDesigners = [
     slug: "prada",
   },
   {
+    slug: "prada",
+  },
+  {
+    slug: "prada",
+  },
+  {
+    slug: "prada",
+  },
+  {
     slug: "pringle-of-scotland",
   },
   {
     slug: "priscavera",
+  },
+  {
+    slug: "proenza-schouler",
   },
   {
     slug: "proenza-schouler",
@@ -465,6 +630,9 @@ const eleanorFavouriteDesigners = [
     slug: "raf-simons",
   },
   {
+    slug: "raf-simons",
+  },
+  {
     slug: "ralph-lauren",
   },
   {
@@ -486,7 +654,7 @@ const eleanorFavouriteDesigners = [
     slug: "rodarte",
   },
   {
-    slug: "romance-was-born",
+    slug: "rodarte",
   },
   {
     slug: "saint-laurent",
@@ -517,7 +685,7 @@ const eleanorFavouriteDesigners = [
     slug: "telfar",
   },
   {
-    slug: "the-marc-jacobs",
+    slug: "row",
   },
   {
     slug: "row",
@@ -526,7 +694,16 @@ const eleanorFavouriteDesigners = [
     slug: "theyskens-theory",
   },
   {
+    slug: "theyskens-theory",
+  },
+  {
     slug: "thom-browne",
+  },
+  {
+    slug: "thom-browne",
+  },
+  {
+    slug: "tom-ford",
   },
   {
     slug: "tom-ford",
@@ -553,6 +730,12 @@ const eleanorFavouriteDesigners = [
     slug: "vaquera",
   },
   {
+    slug: "vaquera",
+  },
+  {
+    slug: "vaquera",
+  },
+  {
     slug: "vejas",
   },
   {
@@ -560,6 +743,12 @@ const eleanorFavouriteDesigners = [
   },
   {
     slug: "versace",
+  },
+  {
+    slug: "vetements",
+  },
+  {
+    slug: "vetements",
   },
   {
     slug: "vetements",

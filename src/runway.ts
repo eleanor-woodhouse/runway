@@ -1,12 +1,13 @@
-import { fetchAllSeasonsForDesigner, fetchShow } from "./api"
-import { VogueShowWithSingleImage, RunwayImage } from "../types"
-import { getDesignersArray } from "../designers"
+import { fetchAllSeasonsForDesigner, fetchShow } from "./api/vogue"
+import { VogueShowWithSingleImage, RunwayImage } from "./types"
+import { getDesignersArray } from "./designers"
+import { formatImageCredit, formatProperNoun } from "./utils"
 
 export async function getRandomImageWithShowDetails(): Promise<VogueShowWithSingleImage> {
   const showData = await getRandomShow()
-  const showRunwayImages = showData.galleries.collection.slidesV2.slide
-  const image = getRandomRunwayImage(showRunwayImages)
-  const formattedCityName = formatCityName(showData.city.name)
+  const runwayImages = showData.galleries.collection.slidesV2.slide
+  const image = getRandomRunwayImage(runwayImages)
+  const formattedCityName = formatProperNoun(showData.city.name)
   const review = {
     author: showData.review?.contributor?.author[0]?.name,
     text: showData.review?.body,
@@ -36,7 +37,7 @@ function getRandomRunwayImage(showRunwayImages: any[]): RunwayImage {
   return image
 }
 
-async function getRandomShow() {
+async function getRandomShow(): Promise<any> {
   const designer = await getRandomDesigner()
   const seasons = await fetchAllSeasonsForDesigner(designer)
   const seasonSlug = getRandomShowSlug(seasons)
@@ -57,23 +58,4 @@ function getRandomShowSlug(seasons: any[]): string {
   const randomIndex = Math.floor(Math.random() * seasons.length)
   const randomShow = seasons[randomIndex]
   return randomShow.slug
-}
-
-function formatImageCredit(credit: string): string {
-  if (credit && credit.startsWith("Photo: ")) {
-    const remainingString = credit.substring("Photo: ".length)
-    return remainingString.trim()
-  } else if (credit && credit.startsWith("Photographed by ")) {
-    const remainingString = credit.substring("Photographed by ".length)
-    return remainingString.trim()
-  }
-  return credit
-}
-
-function formatCityName(cityName: string): string {
-  return cityName
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
 }

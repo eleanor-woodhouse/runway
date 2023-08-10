@@ -1,40 +1,14 @@
-import React, { useEffect, useRef } from "react"
+import React, { useRef } from "react"
 import { useState } from "react"
-import "../styles/App.scss"
+import "../styles/AppWithSimplerLoading.scss"
 import { getRandomImageWithShowDetails } from "../runway"
 import { VogueShowWithSingleImage } from "../types"
 
 function App() {
-  // const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  // const [windowHeight, setWindowHeight] = useState(window.innerHeight)
-
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     setWindowWidth(window.innerWidth)
-  //   }
-
-  //   window.addEventListener("resize", handleWindowResize)
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleWindowResize)
-  //   }
-  // })
-
-  // useEffect(() => {
-  //   const handleWindowResize = () => {
-  //     setWindowHeight(window.innerHeight)
-  //   }
-
-  //   window.addEventListener("resize", handleWindowResize)
-
-  //   return () => {
-  //     window.removeEventListener("resize", handleWindowResize)
-  //   }
-  // })
-
+  // General state
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
 
-  const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(false)
+  const [transitionGridIsVisible, setTransitionGridIsVisibile] = useState(false)
   const [gridStage, setGridStage] = useState({})
   const [gridIsClosed, setGridIsClosed] = useState(false)
 
@@ -68,30 +42,32 @@ function App() {
         gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
       })
     }
-    startTransition()
+    triggerFirstGutterTransition()
   }
 
-  function startTransition() {
-    setTransitionGridIsVisible(true)
-    closeGrid()
+  function triggerFirstGutterTransition() {
+    setTransitionGridIsVisibile(true)
+    triggerFirstGridClosing()
   }
 
-  function closeGrid() {
+  // Give the grid its closed dimensions, thus starting the first closing transition
+  function triggerFirstGridClosing() {
     setTimeout(() => {
       setGridStage({
         gridTemplateColumns: "50vw 0px 50vw",
         gridTemplateRows: "50vh 0px 50vh",
       })
       setTimeout(() => {
+        //removes thick lines
         setGridIsClosed(true)
-        fetchVogueData()
-        startLoading()
+        triggerSecondStage()
       }, 3000)
     })
   }
 
-  function startLoading() {
-    setWelcomeCardIsVisible(false)
+  function triggerSecondStage() {
+    fetchVogueData()
+    setWelcomeCardIsVisible(false) // this doesn't get reset as we want to see it once
     setLoadingCardIsVisible(true)
     openGridToLoadingCard()
   }
@@ -129,11 +105,14 @@ function App() {
     })
   }
 
+  // Wait for data to be fetched, then trigger the grid to be closed again
   function imageLoaded() {
-    closeLoadingCard()
+    // WARNING Need to make sure this doesn't start until loading card has fully opened
+    // How can we check it has fully opened? Because the transition count isn't working
+    // closeGridAgain()
   }
 
-  function closeLoadingCard() {
+  function closeGridAgain() {
     setGridStage({
       gridTemplateColumns: "50vw 0px 50vw",
       gridTemplateRows: "50vh 0px 50vh",
@@ -169,7 +148,7 @@ function App() {
       return prevGridStage
     })
     setTimeout(() => {
-      setTransitionGridIsVisible(false)
+      setTransitionGridIsVisibile(false)
       setInstructionsAreVisible(false)
     }, 3000)
   }
