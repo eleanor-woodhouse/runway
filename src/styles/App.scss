@@ -96,11 +96,10 @@
 .welcome-card {
   grid-column-start: 2;
   grid-row-start: 2;
-  height: 80vh;
-  width: 80vw;
   display: grid;
   place-items: center;
   z-index: 1;
+  cursor: pointer;
 }
 
 .welcome-card.invisible-welcome-card {
@@ -109,6 +108,10 @@
 
 .welcome-card.visible-welcome-card {
   display: grid;
+}
+
+.welcome-card>p{
+  line-height: 50px;
 }
 
 .info-pane {
@@ -139,7 +142,7 @@
   height: auto;
   display: grid;
   place-content: end center;
-  transition: opacity 4s;
+  transition: opacity 6s;
 }
 
 .instructions.invisible-instructions {

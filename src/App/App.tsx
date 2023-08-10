@@ -77,8 +77,6 @@ function App() {
     setGridIsClosed(false)
     // const columnSize = (windowSize.current[0] - 300) / 2
     // const rowSize = (windowSize.current[1] - 220) / 2
-    const columnSize = windowSize.current[0] / 3
-    const rowSize = windowSize.current[1] / 3
     setTransitionGridSizes((prevGridStage) => {
       if (
         leftGutterRef &&
@@ -185,7 +183,7 @@ function App() {
           onClick={handleClick}
         >
           <p>
-            Welcome to the runway archive random image generator<br></br>click to begin
+            Welcome to the Random Runway Look Generator<br></br>click to begin
           </p>
         </div>
         <div className="middle-cell" ref={middleCellRef}>
@@ -197,7 +195,7 @@ function App() {
                     instructionsAreVisible ? "visible-instructions" : "invisible-instructions"
                   }`}
                 >
-                  <p>click image for a new look</p>
+                  <p>click image to retrieve a new look from the archives</p>
                 </div>
                 <div className="card-container">
                   <div className="info-card">
