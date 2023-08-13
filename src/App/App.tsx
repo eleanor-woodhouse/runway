@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { useState } from "react"
 import "../styles/App.scss"
 import { getRandomImageWithShowDetails } from "../runway"
@@ -9,18 +9,19 @@ function App() {
 
   const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(false)
   const [transitionGridSizes, setTransitionGridSizes] = useState({})
+  const [transitionEndCount, setTransitionEndCount] = useState(0)
   const [gridIsClosed, setGridIsClosed] = useState(false)
 
   const [instructionsAreVisible, setInstructionsAreVisible] = useState(true)
   const [welcomeCardIsVisible, setWelcomeCardIsVisible] = useState(true)
   const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(false)
+  const [animationIsPaused, setAnimationIsPaused] = useState(false)
 
   const leftGutterRef = useRef<HTMLDivElement | null>(null)
   const topGutterRef = useRef<HTMLDivElement | null>(null)
   const rightGutterRef = useRef<HTMLDivElement | null>(null)
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
-  const windowSize = useRef([window.innerWidth, window.innerHeight])
 
   async function handleClick() {
     if (
@@ -48,6 +49,12 @@ function App() {
     closeGrid()
   }
 
+  const handleTransitionEnd = () => {
+    setTransitionEndCount((prevCount) => {
+      return prevCount + 1
+    })
+  }
+
   function closeGrid() {
     setTimeout(() => {
       setTransitionGridSizes({
@@ -65,8 +72,15 @@ function App() {
   function startLoading() {
     setWelcomeCardIsVisible(false)
     setLoadingCardIsVisible(true)
-    openGridToLoadingCard()
   }
+
+  useEffect(() => {
+    if (transitionEndCount === 2 && gridIsClosed) {
+      openGridToLoadingCard()
+    } else if (transitionEndCount === 6 && gridIsClosed) {
+      openGridToMainView()
+    }
+  }, [transitionEndCount, gridIsClosed])
 
   async function fetchVogueData() {
     const result = await getRandomImageWithShowDetails()
@@ -75,8 +89,6 @@ function App() {
 
   function openGridToLoadingCard() {
     setGridIsClosed(false)
-    // const columnSize = (windowSize.current[0] - 300) / 2
-    // const rowSize = (windowSize.current[1] - 220) / 2
     setTransitionGridSizes((prevGridStage) => {
       if (
         leftGutterRef &&
@@ -97,26 +109,33 @@ function App() {
           // gridTemplateRows: `${rowSize}px 220px ${rowSize}px`,
           // gridTemplateColumns: `${columnSize}px ${columnSize}px ${columnSize}px`,
           // gridTemplateRows: `${rowSize}px ${rowSize}px ${rowSize}px`,
-          gridTemplateColumns: `33vw 34vw 33vw`,
-          gridTemplateRows: `33vh 34vh 33vh`,
+          gridTemplateColumns: `33vw 34vw 400vw`,
+          gridTemplateRows: `33vh 34vh 400vh`,
         }
       }
       return prevGridStage
     })
+    setTimeout(() => {
+      setAnimationIsPaused(true)
+    }, 3000)
   }
 
   function imageLoaded() {
+    setAnimationIsPaused(false)
     closeLoadingCard()
+    // An overried in case window is resized during transition (throwing count out of sync)
+    setTimeout(() => {
+      openGridToMainView()
+    }, 4000)
   }
 
   function closeLoadingCard() {
     setTransitionGridSizes({
-      gridTemplateColumns: "50vw 0px 50vw",
-      gridTemplateRows: "50vh 0px 50vh",
+      gridTemplateColumns: "50vw 0px 400vw",
+      gridTemplateRows: "50vh 0px 400vh",
     })
     setTimeout(() => {
       setGridIsClosed(true)
-      openGridToMainView()
     }, 3000)
   }
 
@@ -147,14 +166,18 @@ function App() {
     setTimeout(() => {
       setTransitionGridIsVisible(false)
       setInstructionsAreVisible(false)
-    }, 3000)
+      setTransitionEndCount(0)
+    }, 3100)
   }
 
   return (
     <div className="main-body">
       <div
-        className={`transition-grid ${transitionGridIsVisible ? "visible" : "invisible"}`}
+        className={`transition-grid ${transitionGridIsVisible ? "visible" : "invisible"} ${
+          animationIsPaused ? "no-transition" : ""
+        }`}
         style={transitionGridSizes}
+        onTransitionEnd={handleTransitionEnd}
       >
         <div className="cell-one"></div>
         <div className="cell-two"></div>
