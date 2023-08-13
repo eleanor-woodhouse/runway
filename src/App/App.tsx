@@ -22,6 +22,7 @@ function App() {
   const rightGutterRef = useRef<HTMLDivElement | null>(null)
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
+  const welcomeCardRef = useRef<HTMLDivElement | null>(null)
 
   async function handleClick() {
     if (
@@ -34,12 +35,24 @@ function App() {
       bottomGutterRef &&
       bottomGutterRef.current &&
       middleCellRef &&
-      middleCellRef.current
+      middleCellRef.current &&
+      welcomeCardRef &&
+      welcomeCardRef.current
     ) {
-      setTransitionGridSizes({
-        gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
-        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
-      })
+      console.log("Middle cel: ", middleCellRef.current.offsetWidth)
+      console.log("welcome: ", welcomeCardRef.current.offsetWidth)
+
+      if (middleCellRef.current.offsetWidth === 0) {
+        setTransitionGridSizes({
+          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${welcomeCardRef.current.offsetWidth}px 400vw`,
+          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${welcomeCardRef.current.offsetHeight}px 400vh`,
+        })
+      } else {
+        setTransitionGridSizes({
+          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
+          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
+        })
+      }
     }
     startTransition()
   }
@@ -204,9 +217,10 @@ function App() {
         <div
           className={`welcome-card ${welcomeCardIsVisible ? "visible-welcome-card" : "invisible-welcome-card"}`}
           onClick={handleClick}
+          ref={welcomeCardRef}
         >
           <p>
-            Welcome to the Random Runway Look Generator<br></br>click to begin
+            The archive is vast<br></br>click to begin
           </p>
         </div>
         <div className="middle-cell" ref={middleCellRef}>
@@ -238,10 +252,14 @@ function App() {
             )}
           </div>
           {imageAndDetails.image ? (
-            <div className="image-pane" onClick={handleClick}>
-              <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} onLoad={imageLoaded} />
-            </div>
+            <img
+              src={imageAndDetails.image.url}
+              alt={imageAndDetails?.name}
+              onClick={handleClick}
+              onLoad={imageLoaded}
+            />
           ) : (
+            // TODO handle error situation here
             <div className="placeholder" onClick={handleClick}></div>
           )}
         </div>

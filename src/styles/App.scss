@@ -10,8 +10,8 @@
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
-    grid-template-columns: minmax(40px, auto) auto minmax(40px, auto);
-    grid-template-rows: minmax(40px, auto) auto minmax(40px, auto);
+  grid-template-columns: minmax(40px, auto) auto minmax(40px, auto);
+  grid-template-rows: minmax(40px, auto) auto minmax(40px, auto);
 }
 
 .transition-grid {
@@ -126,7 +126,6 @@
 
 .card-container {
   grid-row-start: 2;
-  width: auto;
   min-width: 50%;
   height: auto;
   display: grid;
@@ -134,9 +133,7 @@
 }
 
 .info-card {
-  width: auto;
   min-width: 300px;
-  height: auto;
   border: solid black 1px;
 }
 
@@ -157,28 +154,10 @@
   opacity: 1;
 }
 
-.new-image-card {
-  margin-top: 20px;
-  width: 100%;
-  border: solid black 1px;
-}
-
-.new-image-card > p {
-  width: 100%;
-  text-align: center;
-}
-
-.image-pane {
+img {
   cursor: pointer;
   max-height: calc(100vh - 80px);
-  width: auto;
   max-width: 50%;
-  display: flex;
-}
-
-img {
-  max-height: calc(100vh - 80px);
-  max-width: 100%;
   object-fit: cover;
   border-left: solid black 1px;
 }
@@ -270,4 +249,69 @@ img {
   grid-column-start: 3;
   grid-row-start: 3;
   background: white;
+}
+
+@media only screen and (max-width: 700px) {
+body {
+  font-size: 14px;
+}
+
+.welcome-card {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  cursor: pointer;
+  width: 60vw;
+}
+
+.info-pane {
+  grid-row-start: 2;
+  display: block;
+}
+
+.card-container {
+  grid-row-start: 2;
+  height: 100%;
+  display: grid;
+  place-content: center;
+}
+
+.info-card {
+  min-width: 34%;
+  max-width: calc(100vw - 70px);
+  border: none;
+}
+
+.instructions {
+  display: none
+}
+
+.container {
+  min-height: 100vh;
+  max-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0px, auto) max-content minmax(0px, auto);
+  grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);
+}
+
+.middle-cell {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  width: fit-content;
+  display: grid;
+  grid-template-rows: max-content auto;
+}
+
+img {
+  cursor: pointer;
+  min-width: 100%;
+  max-width: calc(100vw - 34px);
+  max-height: calc(100vh - 200px);
+  object-fit: contain;
+  border: none;
+  border-bottom: solid black 1px;
+}
+
 }
