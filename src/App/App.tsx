@@ -7,6 +7,7 @@ import { VogueShowWithSingleImage } from "../types"
 function App() {
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
 
+  const [maxHeight, setMaxHeight] = useState({})
   const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(false)
   const [transitionGridSizes, setTransitionGridSizes] = useState({})
   const [transitionEndCount, setTransitionEndCount] = useState(0)
@@ -17,12 +18,21 @@ function App() {
   const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(false)
   const [animationIsPaused, setAnimationIsPaused] = useState(false)
 
+  const windowSize = useRef([window.innerHeight, window.innerWidth])
   const leftGutterRef = useRef<HTMLDivElement | null>(null)
   const topGutterRef = useRef<HTMLDivElement | null>(null)
   const rightGutterRef = useRef<HTMLDivElement | null>(null)
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
   const welcomeCardRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (windowSize.current[1] < 450) {
+      setMaxHeight({
+        maxHeight: windowSize.current[1],
+      })
+    }
+  }, [])
 
   async function handleClick() {
     if (
@@ -39,9 +49,6 @@ function App() {
       welcomeCardRef &&
       welcomeCardRef.current
     ) {
-      console.log("Middle cel: ", middleCellRef.current.offsetWidth)
-      console.log("welcome: ", welcomeCardRef.current.offsetWidth)
-
       if (middleCellRef.current.offsetWidth === 0) {
         setTransitionGridSizes({
           gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${welcomeCardRef.current.offsetWidth}px 400vw`,
@@ -178,7 +185,9 @@ function App() {
     })
     setTimeout(() => {
       setTransitionGridIsVisible(false)
-      setInstructionsAreVisible(false)
+      setTimeout(() => {
+        setInstructionsAreVisible(false)
+      }, 4000)
       setTransitionEndCount(0)
     }, 3100)
   }
@@ -211,7 +220,7 @@ function App() {
           <div className="loading-text">Loading</div>
         </div>
       </div>
-      <div className="container">
+      <div className="container" style={maxHeight}>
         <div className="left-gutter" ref={leftGutterRef}></div>
         <div className="top-gutter" ref={topGutterRef}></div>
         <div
@@ -232,7 +241,7 @@ function App() {
                     instructionsAreVisible ? "visible-instructions" : "invisible-instructions"
                   }`}
                 >
-                  <p>click image to retrieve a new look from the archives</p>
+                  <p>click image for a new look</p>
                 </div>
                 <div className="card-container">
                   <div className="info-card">
