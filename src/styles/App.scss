@@ -301,13 +301,21 @@ body {
   margin: 0.2rem;
 }
 
+.info-card:hover {
+  background-color: white;
+}
+
+.info-card:hover > *{
+  color: black;
+}
+
 .instructions {
   display: none
 }
 
 .container {
-  min-height: 100vh;
-  max-height: 100vh;
+  min-height: 100svh;
+  max-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0px, auto) max-content minmax(0px, auto);
   grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);

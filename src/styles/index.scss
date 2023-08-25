@@ -44,6 +44,12 @@ button {
   line-height: inherit;
   padding: 0;
   cursor: pointer;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: left;
 }
 
 p {

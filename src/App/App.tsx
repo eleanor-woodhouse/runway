@@ -195,7 +195,7 @@ function App() {
           <div className="info-pane">
             {imageAndDetails.image ? (
               <div className="card-container">
-                <div className="info-card" onClick={handleInfoClick}>
+                <button className="info-card" onClick={handleInfoClick}>
                   <a href={imageAndDetails.externalLink} target="_blank" rel="noopener noreferrer">
                     <ul className="info">
                       <li>Designer: {imageAndDetails.designer}</li>
@@ -205,7 +205,7 @@ function App() {
                     </ul>
                     <p className="vogue-link">view the show on vogue.com &gt;</p>
                   </a>
-                </div>
+                </button>
               </div>
             ) : (
               <></>
