@@ -272,6 +272,32 @@ body {
   font-size: 14px;
 }
 
+.main-body {
+  height: 100svh;
+}
+
+.container {
+  min-height: 100svh;
+  max-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0px, auto) max-content minmax(0px, auto);
+  grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);
+}
+
+.transition-grid {
+  min-height: 100svh;
+  max-height: 100svh;
+}
+
+.loading {
+  min-height: 100svh;
+  max-height: 100svh;
+}
+
+.loading-card {
+  height: 100svh;
+}
+
 .welcome-card {
   grid-column-start: 2;
   grid-row-start: 2;
@@ -313,14 +339,6 @@ body {
   display: none
 }
 
-.container {
-  min-height: 100svh;
-  max-height: 100svh;
-  display: grid;
-  grid-template-columns: minmax(0px, auto) max-content minmax(0px, auto);
-  grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);
-}
-
 .middle-cell {
   grid-column-start: 2;
   grid-row-start: 2;
@@ -333,7 +351,7 @@ img {
   cursor: pointer;
   min-width: 100%;
   max-width: calc(100vw - 34px);
-  max-height: calc(100vh - 200px);
+  max-height: calc(100svh - 200px);
   object-fit: contain;
   border: none;
   border-bottom: solid black 1px;
