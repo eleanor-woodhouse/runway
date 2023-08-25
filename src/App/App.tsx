@@ -24,6 +24,20 @@ function App() {
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
 
+  const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight])
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight])
+    }
+
+    window.addEventListener("resize", handleWindowResize)
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize)
+    }
+  }, [])
+
   useEffect(() => {
     fetchVogueData()
   }, [])
@@ -55,7 +69,9 @@ function App() {
 
   function handleAboutClick(event: MouseEvent) {
     event.stopPropagation()
-    aboutIsVisible ? setAboutIsVisible(false) : setAboutIsVisible(true)
+    if (windowSize[0] < 450) {
+      aboutIsVisible ? setAboutIsVisible(false) : setAboutIsVisible(true)
+    }
   }
 
   function startTransition() {
