@@ -2,11 +2,16 @@
   text-align: center;
 }
 
+.App > * {
+  cursor: default;
+}
+
 .main-body {
   height: 100vh;
 }
 
 .container {
+  cursor: default;
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
@@ -20,7 +25,7 @@
   min-height: 100vh;
   max-height: 100vh;
   display: grid;
-  transition: grid-template-columns 3s ease-in, grid-template-rows 3s ease-in;
+  transition: grid-template-columns 2s ease-in, grid-template-rows 2s ease-in;
 }
 
 .transition-grid.invisible {
@@ -95,67 +100,77 @@
   grid-row-start: 2;
   height: auto;
   display: flex;
+  position: relative;
 }
 
-.welcome-card {
-  grid-column-start: 2;
-  grid-row-start: 2;
+.about-cell {
+  grid-column-start: 1;
+  grid-row-start: 3;
+  width: 100%;
+  height: 100%;
   display: grid;
-  place-items: center;
-  z-index: 1;
-  cursor: pointer;
+  place-content: center;
+  font-size: 16px;
+  cursor: default;
+  z-index: 8;
 }
 
-.welcome-card.invisible-welcome-card {
+.about-text {
   display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  cursor: default;
+  background-color: white;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
-.welcome-card.visible-welcome-card {
-  display: grid;
-}
-
-.welcome-card>p{
-  line-height: 50px;
-}
-
-.info-pane {
-  display: grid;
-  grid-template-rows: 60% 40%;
-  flex-grow: 1;
-}
-
-.card-container {
-  grid-row-start: 2;
-  min-width: 50%;
-  height: auto;
+.about-text.visible-about-text {
   display: grid;
   place-content: center;
 }
 
-.info-card {
-  min-width: 300px;
-  border: solid black 1px;
+.info-pane {
+  display: grid;
+  flex-grow: 1;
 }
 
-.instructions {
-  grid-row-start: 1;
-  width: auto;
+.card-container {
   height: auto;
   display: grid;
   place-content: end center;
-  transition: opacity 1s;
 }
 
-.instructions.invisible-instructions {
-  opacity: 0;
+.info-card {
+  cursor: pointer;
+  min-width: 300px;
+  border: solid black 1px;
+  margin: 2rem;
 }
 
-.instructions.visible-instructions {
-  opacity: 1;
+.info-card:hover {
+  background-color: black;
+}
+
+.info-card:hover > *{
+  color: white;
+}
+
+.info {
+  padding-bottom: 0rem;
+}
+
+.vogue-link {
+  font-size: 12px;
+  margin: 0;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  text-align: left;
+  font-style: italic;
 }
 
 img {
-  cursor: pointer;
   max-height: calc(100vh - 80px);
   max-width: 50%;
   object-fit: cover;
@@ -252,7 +267,7 @@ img {
 }
 
 // Mobile
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 850px) {
 body {
   font-size: 14px;
 }
@@ -283,6 +298,7 @@ body {
   min-width: 34%;
   max-width: calc(100vw - 70px);
   border: none;
+  margin: 0.2rem;
 }
 
 .instructions {

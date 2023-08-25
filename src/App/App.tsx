@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { MouseEvent, useEffect, useRef } from "react"
 import { useState } from "react"
 import "../styles/App.scss"
 import { getRandomImageWithShowDetails } from "../runway"
@@ -7,34 +7,28 @@ import { VogueShowWithSingleImage } from "../types"
 function App() {
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
 
-  const [maxHeight, setMaxHeight] = useState({})
-  const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(false)
-  const [transitionGridSizes, setTransitionGridSizes] = useState({})
-  const [transitionEndCount, setTransitionEndCount] = useState(0)
+  const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(true)
+  const [transitionGridSizes, setTransitionGridSizes] = useState({
+    gridTemplateColumns: "33vw 34vw 33vw",
+    gridTemplateRows: "33vh 34vh 34vw",
+  })
   const [gridIsClosed, setGridIsClosed] = useState(false)
 
-  const [instructionsAreVisible, setInstructionsAreVisible] = useState(true)
-  const [welcomeCardIsVisible, setWelcomeCardIsVisible] = useState(true)
-  const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(false)
+  const [aboutIsVisible, setAboutIsVisible] = useState(false)
+  const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(true)
   const [animationIsPaused, setAnimationIsPaused] = useState(false)
 
-  const windowSize = useRef([window.innerHeight, window.innerWidth])
   const leftGutterRef = useRef<HTMLDivElement | null>(null)
   const topGutterRef = useRef<HTMLDivElement | null>(null)
   const rightGutterRef = useRef<HTMLDivElement | null>(null)
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
-  const welcomeCardRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (windowSize.current[1] < 450) {
-      setMaxHeight({
-        maxHeight: windowSize.current[1],
-      })
-    }
+    fetchVogueData()
   }, [])
 
-  async function handleClick() {
+  async function handleClick(event: MouseEvent) {
     if (
       leftGutterRef &&
       leftGutterRef.current &&
@@ -45,34 +39,27 @@ function App() {
       bottomGutterRef &&
       bottomGutterRef.current &&
       middleCellRef &&
-      middleCellRef.current &&
-      welcomeCardRef &&
-      welcomeCardRef.current
+      middleCellRef.current
     ) {
-      if (middleCellRef.current.offsetWidth === 0) {
-        setTransitionGridSizes({
-          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${welcomeCardRef.current.offsetWidth}px 400vw`,
-          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${welcomeCardRef.current.offsetHeight}px 400vh`,
-        })
-      } else {
-        setTransitionGridSizes({
-          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
-          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
-        })
-      }
+      setTransitionGridSizes({
+        gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
+        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
+      })
     }
     startTransition()
+  }
+
+  function handleInfoClick(event: MouseEvent) {
+    event.stopPropagation()
+  }
+
+  function handleAboutClick(event: MouseEvent) {
+    event.stopPropagation()
   }
 
   function startTransition() {
     setTransitionGridIsVisible(true)
     closeGrid()
-  }
-
-  const handleTransitionEnd = () => {
-    setTransitionEndCount((prevCount) => {
-      return prevCount + 1
-    })
   }
 
   function closeGrid() {
@@ -85,22 +72,14 @@ function App() {
         setGridIsClosed(true)
         fetchVogueData()
         startLoading()
-      }, 3000)
+      }, 2000)
     })
   }
 
   function startLoading() {
-    setWelcomeCardIsVisible(false)
     setLoadingCardIsVisible(true)
+    openGridToLoadingCard()
   }
-
-  useEffect(() => {
-    if (transitionEndCount === 2 && gridIsClosed) {
-      openGridToLoadingCard()
-    } else if (transitionEndCount === 6 && gridIsClosed) {
-      openGridToMainView()
-    }
-  }, [transitionEndCount, gridIsClosed])
 
   async function fetchVogueData() {
     const result = await getRandomImageWithShowDetails()
@@ -124,11 +103,6 @@ function App() {
       ) {
         return {
           ...prevGridStage,
-          // FIX sizing is sometimes wrong – is this just when dev tools are open?
-          // gridTemplateColumns: `${columnSize}px 300px ${columnSize}px`,
-          // gridTemplateRows: `${rowSize}px 220px ${rowSize}px`,
-          // gridTemplateColumns: `${columnSize}px ${columnSize}px ${columnSize}px`,
-          // gridTemplateRows: `${rowSize}px ${rowSize}px ${rowSize}px`,
           gridTemplateColumns: `33vw 34vw 400vw`,
           gridTemplateRows: `33vh 34vh 400vh`,
         }
@@ -137,16 +111,15 @@ function App() {
     })
     setTimeout(() => {
       setAnimationIsPaused(true)
-    }, 3000)
+    }, 2000)
   }
 
   function imageLoaded() {
     setAnimationIsPaused(false)
     closeLoadingCard()
-    // An overried in case window is resized during transition (throwing count out of sync)
     setTimeout(() => {
       openGridToMainView()
-    }, 4000)
+    }, 2000)
   }
 
   function closeLoadingCard() {
@@ -156,7 +129,7 @@ function App() {
     })
     setTimeout(() => {
       setGridIsClosed(true)
-    }, 3000)
+    }, 2000)
   }
 
   function openGridToMainView() {
@@ -185,11 +158,7 @@ function App() {
     })
     setTimeout(() => {
       setTransitionGridIsVisible(false)
-      setTimeout(() => {
-        setInstructionsAreVisible(false)
-      }, 4000)
-      setTransitionEndCount(0)
-    }, 3100)
+    }, 2100)
   }
 
   return (
@@ -199,7 +168,6 @@ function App() {
           animationIsPaused ? "no-transition" : ""
         }`}
         style={transitionGridSizes}
-        onTransitionEnd={handleTransitionEnd}
       >
         <div className="cell-one"></div>
         <div className="cell-two"></div>
@@ -220,57 +188,56 @@ function App() {
           <div className="loading-text">Loading</div>
         </div>
       </div>
-      <div className="container" style={maxHeight}>
+      <div className="container" onClick={handleClick}>
         <div className="left-gutter" ref={leftGutterRef}></div>
         <div className="top-gutter" ref={topGutterRef}></div>
-        <div
-          className={`welcome-card ${welcomeCardIsVisible ? "visible-welcome-card" : "invisible-welcome-card"}`}
-          onClick={handleClick}
-          ref={welcomeCardRef}
-        >
-          <p>
-            The archive is vast<br></br>click to begin
-          </p>
-        </div>
         <div className="middle-cell" ref={middleCellRef}>
           <div className="info-pane">
             {imageAndDetails.image ? (
-              <>
-                <div
-                  className={`instructions ${
-                    instructionsAreVisible ? "visible-instructions" : "invisible-instructions"
-                  }`}
-                >
-                  <p>click image for a new look</p>
+              <div className="card-container">
+                <div className="info-card" onClick={handleInfoClick}>
+                  <a href={imageAndDetails.externalLink} target="_blank" rel="noopener noreferrer">
+                    <ul className="info">
+                      <li>Designer: {imageAndDetails.designer}</li>
+                      <li>Season: {imageAndDetails.season}</li>
+                      <li>City: {imageAndDetails.city}</li>
+                      <li className="smaller">Photo: {imageAndDetails.image.credit}</li>
+                    </ul>
+                    <p className="vogue-link">view the show on vogue.com &gt;</p>
+                  </a>
                 </div>
-                <div className="card-container">
-                  <div className="info-card">
-                    <a href={imageAndDetails.externalLink} target="_blank" rel="noopener noreferrer">
-                      <ul>
-                        <li>Designer: {imageAndDetails.designer}</li>
-                        <li>Season: {imageAndDetails.season}</li>
-                        <li>City: {imageAndDetails.city}</li>
-                        <li className="smaller">Photo: {imageAndDetails.image.credit}</li>
-                      </ul>
-                    </a>
-                  </div>
-                </div>
-              </>
+              </div>
             ) : (
               <></>
             )}
           </div>
           {imageAndDetails.image ? (
-            <img
-              src={imageAndDetails.image.url}
-              alt={imageAndDetails?.name}
-              onClick={handleClick}
-              onLoad={imageLoaded}
-            />
+            <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} onLoad={imageLoaded} />
           ) : (
             // TODO handle error situation here
-            <div className="placeholder" onClick={handleClick}></div>
+            <div className="placeholder"></div>
           )}
+          <div className={`about-text ${aboutIsVisible ? "visible-about-text" : ""}`}>
+            <p>Welcome</p>
+            <p> I am a runway-look random image generator.</p>
+            <p>
+              Click anywhere on the screen to retrieve a completely new look from vogue.com. The archive is vast, so it
+              may take a moment or two for a new image to be decided upon during each journey.
+            </p>
+            <p>I am not sure how long it will take Vogue to notice I exist - please enjoy me while you can.</p>
+          </div>
+        </div>
+        <div
+          className="about-cell"
+          onClick={handleAboutClick}
+          onMouseEnter={() => {
+            setAboutIsVisible(true)
+          }}
+          onMouseLeave={() => {
+            setAboutIsVisible(false)
+          }}
+        >
+          ?
         </div>
         <div className="right-gutter" ref={rightGutterRef}></div>
         <div className="bottom-gutter" ref={bottomGutterRef}></div>
