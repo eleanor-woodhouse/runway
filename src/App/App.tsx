@@ -55,6 +55,7 @@ function App() {
 
   function handleAboutClick(event: MouseEvent) {
     event.stopPropagation()
+    aboutIsVisible ? setAboutIsVisible(false) : setAboutIsVisible(true)
   }
 
   function startTransition() {
