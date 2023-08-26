@@ -10,7 +10,7 @@ function App() {
   const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(true)
   const [transitionGridSizes, setTransitionGridSizes] = useState({
     gridTemplateColumns: "33vw 34vw 33vw",
-    gridTemplateRows: "33vh 34vh 34vw",
+    gridTemplateRows: "33svh 34svh 33svh",
   })
   const [gridIsClosed, setGridIsClosed] = useState(false)
 
@@ -83,7 +83,7 @@ function App() {
     setTimeout(() => {
       setTransitionGridSizes({
         gridTemplateColumns: "50vw 0px 400vw",
-        gridTemplateRows: "50vh 0px 400vh",
+        gridTemplateRows: "50svh 0px 400vh",
       })
       setTimeout(() => {
         setGridIsClosed(true)
@@ -121,7 +121,7 @@ function App() {
         return {
           ...prevGridStage,
           gridTemplateColumns: `33vw 34vw 400vw`,
-          gridTemplateRows: `33vh 34vh 400vh`,
+          gridTemplateRows: `33svh 34svh 400svh`,
         }
       }
       return prevGridStage
@@ -142,7 +142,7 @@ function App() {
   function closeLoadingCard() {
     setTransitionGridSizes({
       gridTemplateColumns: "50vw 0px 400vw",
-      gridTemplateRows: "50vh 0px 400vh",
+      gridTemplateRows: "50svh 0px 400vh",
     })
     setTimeout(() => {
       setGridIsClosed(true)
