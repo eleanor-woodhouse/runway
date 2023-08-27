@@ -26,20 +26,12 @@ function App() {
   const bottomGutterRef = useRef<HTMLDivElement | null>(null)
   const middleCellRef = useRef<HTMLDivElement | null>(null)
 
-  const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight])
-
   useEffect(() => {
-    if (windowSize[0] < 450) {
+    if (window.innerWidth < 450) {
       setIsMobileScreen(true)
     }
 
-    function handleWindowResize() {
-      setWindowSize([window.innerWidth, window.innerHeight])
-      if (windowSize[0] < 450) {
-        setIsMobileScreen(true)
-      }
-      setIsMobileScreen(false)
-    }
+    fetchVogueData()
 
     window.addEventListener("resize", handleWindowResize)
 
@@ -48,9 +40,12 @@ function App() {
     }
   }, [])
 
-  useEffect(() => {
-    fetchVogueData()
-  }, [])
+  function handleWindowResize() {
+    if (window.innerWidth < 450) {
+      setIsMobileScreen(true)
+    }
+    setIsMobileScreen(false)
+  }
 
   async function handleClick(event: MouseEvent) {
     if (
