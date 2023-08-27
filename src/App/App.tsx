@@ -33,19 +33,12 @@ function App() {
       setIsMobileScreen(true)
     }
 
-    if (windowSize[0] >= 450) {
-      setIsMobileScreen(false)
-    }
-
-    const handleWindowResize = () => {
+    function handleWindowResize() {
       setWindowSize([window.innerWidth, window.innerHeight])
       if (windowSize[0] < 450) {
         setIsMobileScreen(true)
       }
-
-      if (windowSize[0] >= 450) {
-        setIsMobileScreen(false)
-      }
+      setIsMobileScreen(false)
     }
 
     window.addEventListener("resize", handleWindowResize)
