@@ -30,27 +30,20 @@ function App() {
 
   useEffect(() => {
     if (windowSize[0] < 450) {
-      console.log("1")
-
       setIsMobileScreen(true)
     }
 
     if (windowSize[0] >= 450) {
-      console.log("2")
-
       setIsMobileScreen(false)
     }
 
     const handleWindowResize = () => {
       setWindowSize([window.innerWidth, window.innerHeight])
       if (windowSize[0] < 450) {
-        console.log("3")
-
         setIsMobileScreen(true)
       }
 
       if (windowSize[0] >= 450) {
-        console.log("4")
         setIsMobileScreen(false)
       }
     }
