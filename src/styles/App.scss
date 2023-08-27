@@ -167,7 +167,7 @@
 .vogue-link {
   font-size: 12px;
   margin: 0;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 0.5rem 0.5rem 1rem 1rem;
   text-align: left;
   font-style: italic;
 }
@@ -273,7 +273,7 @@ img {
 }
 
 // Mobile
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 449px) {
 body {
   font-size: 14px;
 }
@@ -304,16 +304,6 @@ body {
   height: 100svh;
 }
 
-.welcome-card {
-  grid-column-start: 2;
-  grid-row-start: 2;
-  display: grid;
-  place-items: center;
-  z-index: 1;
-  cursor: pointer;
-  width: 60vw;
-}
-
 .info-pane {
   grid-row-start: 2;
   display: block;
@@ -340,7 +330,7 @@ body {
 
 .info-card {
   min-width: 34%;
-  max-width: calc(100vw - 80px);
+  max-width: calc(100vw - 90px);
   border: none;
   margin: 0rem;
 }
@@ -401,9 +391,8 @@ body {
 }
 
 img {
-  cursor: pointer;
   min-width: 100%;
-  max-width: calc(100vw - 34px);
+  max-width: calc(100vw - 45px);
   max-height: calc(100svh - 200px);
   object-fit: contain;
   border: none;
@@ -411,3 +400,119 @@ img {
 }
 
 }
+
+// Mid-Size Screen
+@media only screen and (min-width: 450px) and (max-width: 850px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .main-body {
+    height: 100svh;
+  }
+  
+  .container {
+    min-height: 100svh;
+    max-height: 100svh;
+    display: grid;
+    grid-template-columns: minmax(0px, auto) max-content minmax(0px, auto);
+    grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);
+  }
+  
+  .transition-grid {
+    min-height: 100svh;
+    max-height: 100svh;
+  }
+  
+  .loading {
+    min-height: 100svh;
+    max-height: 100svh;
+  }
+  
+  .loading-card {
+    height: 100svh;
+  }
+  
+  .info-pane {
+    grid-row-start: 2;
+    display: block;
+    margin: 0.5rem;
+  }
+  
+  .info-pane:hover {
+    margin: 0;
+    padding: 0.5rem;
+    background-color: black;
+  }
+  
+  .card-container {
+    position: relative;
+    grid-row-start: 2;
+    height: 100%;
+    display: grid;
+    place-content: center;
+  }
+  
+  .info-card {
+    min-width: 34%;
+    max-width: calc(100vw - 80px);
+    border: none;
+    margin: 0rem;
+    z-index: 6;
+  }
+  
+  .info-card:hover {
+    z-index: 1;
+    background-color: black;
+    color: black;
+  }
+  
+  .info-card:hover > *{
+    color: black;
+  }
+  
+  .info {
+    padding: 0rem;
+  }
+  
+  .vogue-link {
+    display: none;
+  }
+  
+  .vogue-link-mobile-container {
+    display: grid;
+    place-content: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 5;
+    color: white;
+  }
+  
+  .vogue-link-mobile {
+    color: white;
+    font-style: italic;
+  }
+  
+  .instructions {
+    display: none
+  }
+  
+  .middle-cell {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    width: fit-content;
+    display: grid;
+    grid-template-rows: max-content auto;
+  }
+  
+  img {
+    min-width: 100%;
+    max-width: calc(100vw - 60px);
+    max-height: calc(100svh - 200px);
+    object-fit: contain;
+    border: none;
+    border-bottom: solid black 1px;
+  }
+  
+  }
