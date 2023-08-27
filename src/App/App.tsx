@@ -76,8 +76,6 @@ function App() {
   function handleInfoClick(event: MouseEvent) {
     event.stopPropagation()
     if (isMobileScreen) {
-      console.log("sooo are we getting here")
-
       setVogueLinkIsVisible(true)
     }
   }
@@ -87,6 +85,7 @@ function App() {
     if (isMobileScreen) {
       aboutIsVisible ? setAboutIsVisible(false) : setAboutIsVisible(true)
     }
+    setVogueLinkIsVisible(false)
   }
 
   function handleVogueLinkClick(event: MouseEvent) {
