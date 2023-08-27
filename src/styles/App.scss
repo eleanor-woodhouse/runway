@@ -148,6 +148,8 @@
   min-width: 300px;
   border: solid black 1px;
   margin: 2rem;
+  display: grid;
+  place-content: center;
 }
 
 .info-card:hover {
@@ -159,7 +161,7 @@
 }
 
 .info {
-  padding-bottom: 0rem;
+  padding: 0rem;
 }
 
 .vogue-link {
@@ -168,6 +170,10 @@
   padding: 0.5rem 0.5rem 0.5rem 1rem;
   text-align: left;
   font-style: italic;
+}
+
+.vogue-link-mobile-container {
+  display: none;
 }
 
 img {
@@ -311,9 +317,21 @@ body {
 .info-pane {
   grid-row-start: 2;
   display: block;
+  margin: 0.5rem;
+}
+
+.info-pane.mobile-click {
+  margin: 0;
+  padding: 0.5rem;
+  background-color: black;
+}
+
+.info-card-link {
+  pointer-events: none;
 }
 
 .card-container {
+  position: relative;
   grid-row-start: 2;
   height: 100%;
   display: grid;
@@ -322,9 +340,15 @@ body {
 
 .info-card {
   min-width: 34%;
-  max-width: calc(100vw - 70px);
+  max-width: calc(100vw - 80px);
   border: none;
-  margin: 0.2rem;
+  margin: 0rem;
+}
+
+.info-card.hidden {
+  z-index: 1;
+  background-color: black;
+  color: black;
 }
 
 .info-card:hover {
@@ -333,6 +357,31 @@ body {
 
 .info-card:hover > *{
   color: black;
+}
+
+.vogue-link {
+  display: none;
+}
+
+.vogue-link-mobile-container {
+  display: none;
+  z-index: 0;
+}
+
+.vogue-link-mobile-container.is-visible {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  background-color: black;
+  color: white;
+}
+
+.vogue-link-mobile {
+  color: white;
+  font-style: italic;
 }
 
 .instructions {

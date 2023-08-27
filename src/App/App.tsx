@@ -17,6 +17,8 @@ function App() {
   const [aboutIsVisible, setAboutIsVisible] = useState(false)
   const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(true)
   const [animationIsPaused, setAnimationIsPaused] = useState(false)
+  const [isMobileScreen, setIsMobileScreen] = useState(false)
+  const [vogueLinkIsVisible, setVogueLinkIsVisible] = useState(false)
 
   const leftGutterRef = useRef<HTMLDivElement | null>(null)
   const topGutterRef = useRef<HTMLDivElement | null>(null)
@@ -27,8 +29,30 @@ function App() {
   const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight])
 
   useEffect(() => {
+    if (windowSize[0] < 450) {
+      console.log("1")
+
+      setIsMobileScreen(true)
+    }
+
+    if (windowSize[0] >= 450) {
+      console.log("2")
+
+      setIsMobileScreen(false)
+    }
+
     const handleWindowResize = () => {
       setWindowSize([window.innerWidth, window.innerHeight])
+      if (windowSize[0] < 450) {
+        console.log("3")
+
+        setIsMobileScreen(true)
+      }
+
+      if (windowSize[0] >= 450) {
+        console.log("4")
+        setIsMobileScreen(false)
+      }
     }
 
     window.addEventListener("resize", handleWindowResize)
@@ -65,13 +89,22 @@ function App() {
 
   function handleInfoClick(event: MouseEvent) {
     event.stopPropagation()
+    if (isMobileScreen) {
+      console.log("sooo are we getting here")
+
+      setVogueLinkIsVisible(true)
+    }
   }
 
   function handleAboutClick(event: MouseEvent) {
     event.stopPropagation()
-    if (windowSize[0] < 450) {
+    if (isMobileScreen) {
       aboutIsVisible ? setAboutIsVisible(false) : setAboutIsVisible(true)
     }
+  }
+
+  function handleVogueLinkClick(event: MouseEvent) {
+    event.stopPropagation()
   }
 
   function startTransition() {
@@ -96,6 +129,9 @@ function App() {
   function startLoading() {
     setLoadingCardIsVisible(true)
     openGridToLoadingCard()
+    if (vogueLinkIsVisible) {
+      setVogueLinkIsVisible(false)
+    }
   }
 
   async function fetchVogueData() {
@@ -209,11 +245,16 @@ function App() {
         <div className="left-gutter" ref={leftGutterRef}></div>
         <div className="top-gutter" ref={topGutterRef}></div>
         <div className="middle-cell" ref={middleCellRef}>
-          <div className="info-pane">
+          <div className={`info-pane ${vogueLinkIsVisible ? "mobile-click" : ""}`}>
             {imageAndDetails.image ? (
               <div className="card-container">
                 <button className="info-card" onClick={handleInfoClick}>
-                  <a href={imageAndDetails.externalLink} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="info-card-link"
+                    href={imageAndDetails.externalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <ul className="info">
                       <li>Designer: {imageAndDetails.designer}</li>
                       <li>Season: {imageAndDetails.season}</li>
@@ -223,6 +264,15 @@ function App() {
                     <p className="vogue-link">view the show on vogue.com &gt;</p>
                   </a>
                 </button>
+                <a
+                  href={imageAndDetails.externalLink}
+                  className={`vogue-link-mobile-container ${vogueLinkIsVisible ? "is-visible" : ""}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={handleVogueLinkClick}
+                >
+                  <button className="vogue-link-mobile">view the show on vogue.com &gt;</button>
+                </a>
               </div>
             ) : (
               <></>
@@ -234,7 +284,7 @@ function App() {
             // TODO handle error situation here
             <div className="placeholder"></div>
           )}
-          <div className={`about-text ${aboutIsVisible ? "visible-about-text" : ""}`}>
+          <div className={`about-text ${aboutIsVisible ? "visible-about-text" : ""}`} onClick={handleAboutClick}>
             <p>Welcome</p>
             <p> I am a runway-look random image generator.</p>
             <p>
