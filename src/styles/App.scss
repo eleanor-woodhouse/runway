@@ -161,7 +161,7 @@
 }
 
 .info {
-  padding: 0rem;
+  padding-bottom: 0rem;
 }
 
 .vogue-link {
@@ -357,6 +357,10 @@ body {
 
 .info-card:hover > *{
   color: black;
+}
+
+.info {
+  padding: 0rem;
 }
 
 .vogue-link {
