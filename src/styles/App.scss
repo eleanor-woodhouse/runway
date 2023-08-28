@@ -331,10 +331,10 @@ body {
 }
 
 .info-card {
-  min-width: 34%;
   max-width: calc(100vw - 90px);
   border: none;
   margin: 0rem;
+  min-width: 250px;
 }
 
 .info-card.hidden {
