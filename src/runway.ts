@@ -3,23 +3,27 @@ import { VogueShowWithSingleImage, RunwayImage } from "./types"
 import { getDesignersArray } from "./designers"
 import { formatImageCredit, formatProperNoun } from "./utils"
 
-export async function getRandomImageWithShowDetails(): Promise<VogueShowWithSingleImage> {
-  const showData = await getRandomShow()
-  const runwayImages = showData.galleries.collection.slidesV2.slide
-  const image = getRandomRunwayImage(runwayImages)
-  const formattedCityName = formatProperNoun(showData.city.name)
-  const review = {
-    author: showData.review?.contributor?.author[0]?.name,
-    text: showData.review?.body,
-  }
-  return {
-    name: showData.title,
-    designer: showData.brand.name,
-    season: showData.season.name,
-    city: formattedCityName,
-    review,
-    image,
-    externalLink: showData.url,
+export async function getRandomImageWithShowDetails(): Promise<VogueShowWithSingleImage | void> {
+  try {
+    const showData = await getRandomShow()
+    const runwayImages = showData.galleries.collection.slidesV2.slide
+    const image = getRandomRunwayImage(runwayImages)
+    const formattedCityName = formatProperNoun(showData.city.name)
+    const review = {
+      author: showData.review?.contributor?.author[0]?.name,
+      text: showData.review?.body,
+    }
+    return {
+      name: showData.title,
+      designer: showData.brand.name,
+      season: showData.season.name,
+      city: formattedCityName,
+      review,
+      image,
+      externalLink: showData.url,
+    }
+  } catch (error) {
+    console.error("Could not retrieve runway look, try again")
   }
 }
 

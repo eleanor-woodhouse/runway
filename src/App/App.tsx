@@ -30,11 +30,8 @@ function App() {
     if (window.innerWidth < 450) {
       setIsMobileScreen(true)
     }
-
     fetchVogueData()
-
     window.addEventListener("resize", handleWindowResize)
-
     return () => {
       window.removeEventListener("resize", handleWindowResize)
     }
@@ -62,7 +59,7 @@ function App() {
     ) {
       setTransitionGridSizes({
         gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
-        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400vh`,
+        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400svh`,
       })
     }
     startTransition()
@@ -96,7 +93,7 @@ function App() {
     setTimeout(() => {
       setTransitionGridSizes({
         gridTemplateColumns: "50vw 0px 400vw",
-        gridTemplateRows: "50svh 0px 400vh",
+        gridTemplateRows: "50svh 0px 400svh",
       })
       setTimeout(() => {
         setGridIsClosed(true)
@@ -116,7 +113,10 @@ function App() {
 
   async function fetchVogueData() {
     const result = await getRandomImageWithShowDetails()
-    setImageAndDetails(result)
+    if (result) {
+      setImageAndDetails(result)
+    } else {
+    }
   }
 
   function openGridToLoadingCard() {
@@ -158,7 +158,7 @@ function App() {
   function closeLoadingCard() {
     setTransitionGridSizes({
       gridTemplateColumns: "50vw 0px 400vw",
-      gridTemplateRows: "50svh 0px 400vh",
+      gridTemplateRows: "50svh 0px 400svh",
     })
     setTimeout(() => {
       setGridIsClosed(true)
@@ -225,53 +225,51 @@ function App() {
         <div className="left-gutter" ref={leftGutterRef}></div>
         <div className="top-gutter" ref={topGutterRef}></div>
         <div className="middle-cell" ref={middleCellRef}>
-          <div className={`info-pane ${vogueLinkIsVisible ? "mobile-click" : ""}`}>
-            {imageAndDetails.image ? (
-              <div className="card-container">
-                <button className="info-card" onClick={handleInfoClick}>
+          {imageAndDetails.image ? (
+            <>
+              <div className={`info-pane ${vogueLinkIsVisible ? "mobile-click" : ""}`}>
+                <div className="card-container">
+                  <button className="info-card" onClick={handleInfoClick}>
+                    <a
+                      className="info-card-link"
+                      href={imageAndDetails.externalLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ul className="info">
+                        <li>Designer: {imageAndDetails.designer}</li>
+                        <li>Season: {imageAndDetails.season}</li>
+                        <li>City: {imageAndDetails.city}</li>
+                        <li className="smaller">Photo: {imageAndDetails.image.credit}</li>
+                      </ul>
+                      <p className="vogue-link">view the show on vogue.com &gt;</p>
+                    </a>
+                  </button>
                   <a
-                    className="info-card-link"
                     href={imageAndDetails.externalLink}
+                    className={`vogue-link-mobile-container ${vogueLinkIsVisible ? "is-visible" : ""}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={handleVogueLinkClick}
                   >
-                    <ul className="info">
-                      <li>Designer: {imageAndDetails.designer}</li>
-                      <li>Season: {imageAndDetails.season}</li>
-                      <li>City: {imageAndDetails.city}</li>
-                      <li className="smaller">Photo: {imageAndDetails.image.credit}</li>
-                    </ul>
-                    <p className="vogue-link">view the show on vogue.com &gt;</p>
+                    <button className="vogue-link-mobile">view the show on vogue.com &gt;</button>
                   </a>
-                </button>
-                <a
-                  href={imageAndDetails.externalLink}
-                  className={`vogue-link-mobile-container ${vogueLinkIsVisible ? "is-visible" : ""}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleVogueLinkClick}
-                >
-                  <button className="vogue-link-mobile">view the show on vogue.com &gt;</button>
-                </a>
+                </div>
               </div>
-            ) : (
-              <></>
-            )}
-          </div>
-          {imageAndDetails.image ? (
-            <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} onLoad={imageLoaded} />
+              <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} onLoad={imageLoaded} />
+            </>
           ) : (
-            // TODO handle error situation here
-            <div className="placeholder"></div>
+            <div className="error-message">something went wrong, please try again</div>
           )}
           <div className={`about-text ${aboutIsVisible ? "visible-about-text" : ""}`} onClick={handleAboutClick}>
             <p>Welcome</p>
-            <p> I am a runway-look random image generator.</p>
+            <p> I am a runway-look random image generator</p>
             <p>
-              Click anywhere on the screen to retrieve a completely new look from vogue.com. The archive is vast, so it
-              may take a moment or two for a new image to be decided upon during each journey.
+              Click anywhere on the screen to retrieve a completely new look from vogue.com
+              <br></br>
+              The archive is vast, so it may take a moment or two for a new image to be decided upon during each journey
             </p>
-            <p>I am not sure how long it will take Vogue to notice I exist - please enjoy me while you can.</p>
+            <p>I am not sure how long it will take Vogue to notice I exist - please enjoy me while you can</p>
           </div>
         </div>
         <div

@@ -18,7 +18,7 @@ export async function fetchShow(showSlug: string): Promise<any> {
   return showData.fashionShowV2
 }
 
-export async function fetchFromVogue(url: string) {
+export async function fetchFromVogue(url: string): Promise<any> {
   const res = await fetch(url, {
     method: "GET",
     headers: {

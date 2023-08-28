@@ -183,9 +183,11 @@ img {
   border-left: solid black 1px;
 }
 
-.placeholder {
-  cursor: pointer;
-  width: 50%;
+.error-message {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-content: center;
 }
 
 .left-gutter {
