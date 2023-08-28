@@ -7,6 +7,9 @@ import { VogueShowWithSingleImage } from "../types"
 function App() {
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
 
+  const [transitionStage, setTransitionStage] = useState("loading")
+  const [transitionEnded, setTransitionEnded] = useState(0)
+
   const [transitionGridIsVisible, setTransitionGridIsVisible] = useState(true)
   const [transitionGridSizes, setTransitionGridSizes] = useState({
     gridTemplateColumns: "33vw 34vw 33vw",
@@ -31,38 +34,14 @@ function App() {
       setIsMobileScreen(true)
     }
     fetchVogueData()
-    window.addEventListener("resize", handleWindowResize)
-    return () => {
-      window.removeEventListener("resize", handleWindowResize)
-    }
   }, [])
 
-  function handleWindowResize() {
-    if (window.innerWidth < 450) {
-      setIsMobileScreen(true)
-    }
-    setIsMobileScreen(false)
-  }
-
-  async function handleClick(event: MouseEvent) {
-    if (
-      leftGutterRef &&
-      leftGutterRef.current &&
-      topGutterRef &&
-      topGutterRef.current &&
-      rightGutterRef &&
-      rightGutterRef.current &&
-      bottomGutterRef &&
-      bottomGutterRef.current &&
-      middleCellRef &&
-      middleCellRef.current
-    ) {
-      setTransitionGridSizes({
-        gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px 400vw`,
-        gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px 400svh`,
-      })
-    }
-    startTransition()
+  function handleClick(event: MouseEvent) {
+    fetchVogueData()
+    setTransitionGridIsVisible(true)
+    setTimeout(() => {
+      closeGrid()
+    })
   }
 
   function handleInfoClick(event: MouseEvent) {
@@ -84,42 +63,70 @@ function App() {
     event.stopPropagation()
   }
 
-  function startTransition() {
-    setTransitionGridIsVisible(true)
-    closeGrid()
+  function handleTransitionEnd() {
+    const newCount = transitionEnded + 1
+    setTransitionEnded(newCount)
   }
+
+  useEffect(() => {
+    if (transitionStage === "loading closing") {
+      setTransitionStage("loading closed")
+      setGridIsClosed(true)
+    } else if (transitionStage === "main closing") {
+      setTransitionStage("main closed")
+      setGridIsClosed(true)
+    } else if (transitionStage === "main") {
+      setTransitionGridIsVisible(false)
+    }
+  }, [transitionEnded])
+
+  useEffect(() => {
+    if (transitionStage === "loading closed") {
+      setTransitionStage("main opening")
+      openGridToMainView()
+    } else if (transitionStage === "main closed") {
+      setTransitionStage("loading opening")
+      openGridToLoadingCard()
+    }
+  }, [gridIsClosed])
 
   function closeGrid() {
-    setTimeout(() => {
-      setTransitionGridSizes({
-        gridTemplateColumns: "50vw 0px 400vw",
-        gridTemplateRows: "50svh 0px 400svh",
-      })
-      setTimeout(() => {
-        setGridIsClosed(true)
-        fetchVogueData()
-        startLoading()
-      }, 2000)
+    setTransitionStage("main closing")
+    setTransitionGridSizes({
+      gridTemplateColumns: "50vw 0px 400vw",
+      gridTemplateRows: "50svh 0px 400svh",
     })
-  }
-
-  function startLoading() {
-    setLoadingCardIsVisible(true)
-    openGridToLoadingCard()
-    if (vogueLinkIsVisible) {
-      setVogueLinkIsVisible(false)
-    }
   }
 
   async function fetchVogueData() {
     const result = await getRandomImageWithShowDetails()
     if (result) {
-      setImageAndDetails(result)
+      if (transitionStage === "main" || "main closing") {
+        setTimeout(() => {
+          setImageAndDetails(result)
+        }, 2500)
+      } else if (transitionStage === "main closed") {
+        setTimeout(() => {
+          setImageAndDetails(result)
+        }, 1000)
+      } else if (transitionStage === "loading opening") {
+        setTimeout(() => {
+          setImageAndDetails(result)
+        }, 500)
+      } else {
+        setImageAndDetails(result)
+      }
     } else {
+      setAnimationIsPaused(false)
+      closeLoadingCard() // will eventually open to an error message informing the user to try again
     }
   }
 
   function openGridToLoadingCard() {
+    if (vogueLinkIsVisible) {
+      setVogueLinkIsVisible(false)
+    }
+    setLoadingCardIsVisible(true)
     setGridIsClosed(false)
     setTransitionGridSizes((prevGridStage) => {
       if (
@@ -144,25 +151,21 @@ function App() {
     })
     setTimeout(() => {
       setAnimationIsPaused(true)
+      setTransitionStage("loading")
     }, 2000)
   }
 
   function imageLoaded() {
     setAnimationIsPaused(false)
     closeLoadingCard()
-    setTimeout(() => {
-      openGridToMainView()
-    }, 2000)
   }
 
   function closeLoadingCard() {
+    setTransitionStage("loading closing")
     setTransitionGridSizes({
       gridTemplateColumns: "50vw 0px 400vw",
       gridTemplateRows: "50svh 0px 400svh",
     })
-    setTimeout(() => {
-      setGridIsClosed(true)
-    }, 2000)
   }
 
   function openGridToMainView() {
@@ -189,9 +192,10 @@ function App() {
       }
       return prevGridStage
     })
+    setTransitionStage("main")
     setTimeout(() => {
       setTransitionGridIsVisible(false)
-    }, 2100)
+    }, 2000)
   }
 
   return (
@@ -201,6 +205,7 @@ function App() {
           animationIsPaused ? "no-transition" : ""
         }`}
         style={transitionGridSizes}
+        onTransitionEnd={handleTransitionEnd}
       >
         <div className="cell-one"></div>
         <div className="cell-two"></div>
