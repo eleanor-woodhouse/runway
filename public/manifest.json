@@ -1,6 +1,6 @@
 {
-  "short_name": "Runway Generator",
-  "name": "Random Runway Look Generator",
+  "short_name": "vogue4190874",
+  "name": "vogue4190874",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,7 +9,5 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "display": "standalone"
 }
