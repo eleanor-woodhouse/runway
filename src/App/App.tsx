@@ -126,14 +126,17 @@ function App() {
         setTimeout(() => {
           setImageAndDetails(result)
         }, 2500)
+        return
       } else if (transitionStage === "main closed") {
         setTimeout(() => {
           setImageAndDetails(result)
         }, 1000)
+        return
       } else if (transitionStage === "loading opening") {
         setTimeout(() => {
           setImageAndDetails(result)
         }, 500)
+        return
       } else {
         setImageAndDetails(result)
       }
