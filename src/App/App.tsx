@@ -19,7 +19,7 @@ function App() {
 
   const [aboutIsVisible, setAboutIsVisible] = useState(false)
   const [loadingCardIsVisible, setLoadingCardIsVisible] = useState(true)
-  const [animationIsPaused, setAnimationIsPaused] = useState(false)
+  const [animationIsPaused, setAnimationIsPaused] = useState(true)
   const [isMobileScreen, setIsMobileScreen] = useState(false)
   const [vogueLinkIsVisible, setVogueLinkIsVisible] = useState(false)
 
