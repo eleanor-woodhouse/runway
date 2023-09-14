@@ -39,32 +39,35 @@ function App() {
   }, [])
 
   function handleClick(event: MouseEvent) {
-    fetchVogueData()
-    setTransitionGridSizes((prevGridStage) => {
-      if (
-        leftGutterRef &&
-        leftGutterRef.current &&
-        topGutterRef &&
-        topGutterRef.current &&
-        rightGutterRef &&
-        rightGutterRef.current &&
-        bottomGutterRef &&
-        bottomGutterRef.current &&
-        middleCellRef &&
-        middleCellRef.current
-      ) {
-        return {
-          ...prevGridStage,
-          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px ${rightGutterRef.current.offsetWidth}px`,
-          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
+    if (!aboutIsVisible) {
+      fetchVogueData()
+      setTransitionGridSizes((prevGridStage) => {
+        if (
+          leftGutterRef &&
+          leftGutterRef.current &&
+          topGutterRef &&
+          topGutterRef.current &&
+          rightGutterRef &&
+          rightGutterRef.current &&
+          bottomGutterRef &&
+          bottomGutterRef.current &&
+          middleCellRef &&
+          middleCellRef.current
+        ) {
+          return {
+            ...prevGridStage,
+            gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px ${rightGutterRef.current.offsetWidth}px`,
+            gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
+          }
         }
-      }
-      return prevGridStage
-    })
-    setTransitionGridIsVisible(true)
-    setTimeout(() => {
-      closeGrid()
-    })
+        return prevGridStage
+      })
+      setTransitionGridIsVisible(true)
+      setTimeout(() => {
+        closeGrid()
+      })
+    }
+    setAboutIsVisible(false)
   }
 
   function handleInfoClick(event: MouseEvent) {
