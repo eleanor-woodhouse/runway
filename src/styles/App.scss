@@ -293,12 +293,16 @@ body {
 }
 
 .container.isSafari {
-  border-top: solid black 1px;
+  border-top: solid lightgray 1px;
 }
 
 .transition-grid {
   min-height: 100svh;
   max-height: 100svh;
+}
+
+.transition-grid.isSafari {
+  border-top: solid lightgray 1px;
 }
 
 .loading {

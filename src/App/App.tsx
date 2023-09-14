@@ -230,7 +230,7 @@ function App() {
         <div
           className={`transition-grid ${transitionGridIsVisible ? "visible" : "invisible"} ${
             animationIsPaused ? "no-transition" : ""
-          }`}
+          } ${isSafari ? "isSafari" : ""}`}
           style={transitionGridSizes}
           onTransitionEnd={handleTransitionEnd}
         >
