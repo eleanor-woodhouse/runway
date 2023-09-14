@@ -292,6 +292,10 @@ body {
   grid-template-rows: minmax(20px, auto) auto minmax(20px, auto);
 }
 
+.container.isSafari {
+  border-top: solid black 1px;
+}
+
 .transition-grid {
   min-height: 100svh;
   max-height: 100svh;

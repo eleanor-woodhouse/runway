@@ -4,6 +4,7 @@ import { useState } from "react"
 import "../styles/App.scss"
 import { getRandomImageWithShowDetails } from "../runway"
 import { VogueShowWithSingleImage } from "../types"
+import { isSafari } from "react-device-detect"
 
 function App() {
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
@@ -252,7 +253,7 @@ function App() {
             <div className="loading-text">Loading</div>
           </div>
         </div>
-        <div className="container" onClick={handleClick}>
+        <div className={`container ${isSafari ? "isSafari" : ""}`} onClick={handleClick}>
           <div className="left-gutter" ref={leftGutterRef}></div>
           <div className="top-gutter" ref={topGutterRef}></div>
           <div className="middle-cell" ref={middleCellRef}>
