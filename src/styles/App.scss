@@ -320,6 +320,8 @@ body {
 
 .info-card-link {
   pointer-events: none;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .card-container {
@@ -399,6 +401,11 @@ img {
   object-fit: contain;
   border: none;
   border-bottom: solid black 1px;
+}
+
+li {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 }
