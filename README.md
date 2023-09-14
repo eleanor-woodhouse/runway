@@ -80,8 +80,3 @@ This section has moved here:
 
 This section has moved here:
 [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## TODOs
-
-On mobile, when the about text is visible, clicking anywhere on the screen returns you to the default screen (instead of
-closing the about text, and triggering a new image fetch)
