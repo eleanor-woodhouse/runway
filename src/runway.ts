@@ -50,14 +50,16 @@ async function getRandomShow(): Promise<any> {
 }
 
 async function getRandomDesigner(): Promise<string> {
+  // Choose a truly random designer (more than 2000):
   //   const designers = await fetchAllDesigners()
-  const designers = getDesignersArray(false)
+
+  // Choose from a hard coded shortlist of only relevant designers (picked by Eleanor, ~200):
+  const designers = getDesignersArray()
   const randomIndex = Math.floor(Math.random() * designers.length)
   const randomDesigner = designers[randomIndex]
   return randomDesigner
 }
 
-// TODO how to make type a string that matches one value of an object, or one item in an array?
 function getRandomShowSlug(seasons: any[]): string {
   const randomIndex = Math.floor(Math.random() * seasons.length)
   const randomShow = seasons[randomIndex]

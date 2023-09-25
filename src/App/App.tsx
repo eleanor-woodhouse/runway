@@ -5,6 +5,7 @@ import "../styles/App.scss"
 import { getRandomImageWithShowDetails } from "../runway"
 import { VogueShowWithSingleImage } from "../types"
 import { isSafari } from "react-device-detect"
+import { getOffsetWidth, getOffsetHeight } from "./helpers"
 
 function App() {
   const [imageAndDetails, setImageAndDetails] = useState({} as VogueShowWithSingleImage)
@@ -42,25 +43,13 @@ function App() {
     if (!aboutIsVisible) {
       fetchVogueData()
       setTransitionGridSizes((prevGridStage) => {
-        if (
-          leftGutterRef &&
-          leftGutterRef.current &&
-          topGutterRef &&
-          topGutterRef.current &&
-          rightGutterRef &&
-          rightGutterRef.current &&
-          bottomGutterRef &&
-          bottomGutterRef.current &&
-          middleCellRef &&
-          middleCellRef.current
-        ) {
-          return {
-            ...prevGridStage,
-            gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px ${rightGutterRef.current.offsetWidth}px`,
-            gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
-          }
+        return {
+          ...prevGridStage,
+          // prettier-ignore
+          gridTemplateColumns: `${getOffsetWidth(leftGutterRef)}px ${getOffsetWidth(middleCellRef)}px ${getOffsetWidth(rightGutterRef)}px`,
+          // prettier-ignore
+          gridTemplateRows: `${getOffsetHeight(topGutterRef)}px ${getOffsetHeight(middleCellRef)}px ${getOffsetHeight(bottomGutterRef)}px`,
         }
-        return prevGridStage
       })
       setTransitionGridIsVisible(true)
       setTimeout(() => {
@@ -126,8 +115,9 @@ function App() {
 
   async function fetchVogueData() {
     const result = await getRandomImageWithShowDetails()
+    // TODO refactor. Don't love using set timeouts as safety nets for when API calls results faster than normal.
     if (result) {
-      if (transitionStage === "main" || "main closing") {
+      if (transitionStage === "main" || transitionStage === "main closing") {
         setTimeout(() => {
           setImageAndDetails(result)
         }, 2500)
@@ -158,25 +148,11 @@ function App() {
     setLoadingCardIsVisible(true)
     setGridIsClosed(false)
     setTransitionGridSizes((prevGridStage) => {
-      if (
-        leftGutterRef &&
-        leftGutterRef.current &&
-        topGutterRef &&
-        topGutterRef.current &&
-        rightGutterRef &&
-        rightGutterRef.current &&
-        bottomGutterRef &&
-        bottomGutterRef.current &&
-        middleCellRef &&
-        middleCellRef.current
-      ) {
-        return {
-          ...prevGridStage,
-          gridTemplateColumns: `33vw 34vw 400vw`,
-          gridTemplateRows: `33svh 34svh 400svh`,
-        }
+      return {
+        ...prevGridStage,
+        gridTemplateColumns: `33vw 34vw 400vw`,
+        gridTemplateRows: `33svh 34svh 400svh`,
       }
-      return prevGridStage
     })
     setTimeout(() => {
       setAnimationIsPaused(true)
@@ -201,25 +177,13 @@ function App() {
     setLoadingCardIsVisible(false)
     setGridIsClosed(false)
     setTransitionGridSizes((prevGridStage) => {
-      if (
-        leftGutterRef &&
-        leftGutterRef.current &&
-        topGutterRef &&
-        topGutterRef.current &&
-        rightGutterRef &&
-        rightGutterRef.current &&
-        bottomGutterRef &&
-        bottomGutterRef.current &&
-        middleCellRef &&
-        middleCellRef.current
-      ) {
-        return {
-          ...prevGridStage,
-          gridTemplateColumns: `${leftGutterRef.current.offsetWidth}px ${middleCellRef.current.offsetWidth}px ${rightGutterRef.current.offsetWidth}px`,
-          gridTemplateRows: `${topGutterRef.current.offsetHeight}px ${middleCellRef.current.offsetHeight}px ${bottomGutterRef.current.offsetHeight}px`,
-        }
+      return {
+        ...prevGridStage,
+        // prettier-ignore
+        gridTemplateColumns: `${getOffsetWidth(leftGutterRef)}px ${getOffsetWidth(middleCellRef)}px ${getOffsetWidth(rightGutterRef)}px`,
+        // prettier-ignore
+        gridTemplateRows: `${getOffsetHeight(topGutterRef)}px ${getOffsetHeight(middleCellRef)}px ${getOffsetHeight(bottomGutterRef)}px`,
       }
-      return prevGridStage
     })
     setTransitionStage("main")
     setTimeout(() => {
