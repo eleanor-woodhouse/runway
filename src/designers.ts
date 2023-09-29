@@ -528,6 +528,9 @@ const eleanorFavouriteDesigners = [
     slug: "meadham-kirchhoff",
   },
   {
+    slug: "miguel-adrover",
+  },
+  {
     slug: "molly-goddard",
   },
   {

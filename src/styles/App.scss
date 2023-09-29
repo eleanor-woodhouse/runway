@@ -293,7 +293,7 @@ body {
 }
 
 .container.isSafari {
-  border-top: solid #dbdbdb 1px;
+  border-top: solid #dbdbdb 0.5px;
 }
 
 .transition-grid {
@@ -302,7 +302,7 @@ body {
 }
 
 .transition-grid.isSafari {
-  border-top: solid #dbdbdb 1px;
+  border-top: solid #dbdbdb 0.5px;
 }
 
 .loading {
