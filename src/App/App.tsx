@@ -120,6 +120,7 @@ function App() {
       if (transitionStage === "main" || transitionStage === "main closing") {
         setTimeout(() => {
           setImageAndDetails(result)
+          console.log("image: ", imageAndDetails)
         }, 2500)
         return
       } else if (transitionStage === "main closed") {
@@ -258,7 +259,12 @@ function App() {
                 <img src={imageAndDetails.image.url} alt={imageAndDetails?.name} onLoad={imageLoaded} />
               </>
             ) : (
-              <div className="error-message">something went wrong, please try again</div>
+              // <div className="error-message">something went wrong, please try again</div>
+              <div className="error-message">
+                Vogue has finally restricted access to their archives
+                <br></br>thank you for visiting
+                <br></br>it's been a good ride :')
+              </div>
             )}
             <div className={`about-text ${aboutIsVisible ? "visible-about-text" : ""}`} onClick={handleAboutClick}>
               <p>Welcome</p>

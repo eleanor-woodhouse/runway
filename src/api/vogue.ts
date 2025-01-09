@@ -19,16 +19,21 @@ export async function fetchShow(showSlug: string): Promise<any> {
 }
 
 export async function fetchFromVogue(url: string): Promise<any> {
-  const res = await fetch(url, {
+  console.log("fetch before")
+
+  const res = await fetch(`/api/fetchvogue?url=${url}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Host: "graphql.vogue.com",
+      // Host: "graphql.vogue.com",
       //   "User-Agent":
       // "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
     },
-    referrerPolicy: "origin",
+    // referrerPolicy: "origin",
   })
+
+  console.log("fetch after")
+
   const json = await res.json()
   return json.data
 }
